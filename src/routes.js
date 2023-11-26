@@ -51,7 +51,7 @@ var routes = [
     {
         path: "/projectLocations",
         name: "Project Locations",
-        icon: "ni ni-map-big text-orange",
+        icon: "ni ni-pin-3 text-orange",
         component: <ProjectLocationScreen />,
         layout: "/admin",
     },
