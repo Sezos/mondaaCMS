@@ -71,7 +71,7 @@ const WorkHourScreen = (props) => {
             (await services.getUsers())
                 .map((emp) => {
                     return {
-                        value: emp.employeeId,
+                        value: emp.id,
                         label: emp.firstName + " " + emp.lastName,
                     };
                 })
@@ -95,8 +95,8 @@ const WorkHourScreen = (props) => {
         const data = await services.getWorkHours(
             fromDate,
             toDate,
-            employeeId,
-            projectLocationId
+            employeeId?.value,
+            projectLocationId?.value
         );
         setDatas(
             data.map((dat) => {
@@ -134,18 +134,18 @@ const WorkHourScreen = (props) => {
                 </Col>
                 <Col md="2" fluid className="mt--8 ml-3">
                     <Select
-                        value={{ value: undefined, label: "Any" }}
+                        value={employeeId}
                         options={employees}
-                        onChange={({ value }) => {
+                        onChange={(value) => {
                             setEmployeeId(value);
                         }}
                     />
                 </Col>
                 <Col md="2" fluid className="mt--8 ml-3">
                     <Select
-                        value={{ value: undefined, label: "Any" }}
+                        value={projectLocationId}
                         options={projectLocations}
-                        onChange={({ value }) => {
+                        onChange={(value) => {
                             setProjectLocationId(value);
                         }}
                     />
