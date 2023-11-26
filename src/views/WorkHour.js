@@ -172,6 +172,7 @@ const WorkHourScreen = (props) => {
                     fields={fields}
                     name={"Projects"}
                     onClick={open}
+                    isDownload={true}
                 />
             </div>
         </>

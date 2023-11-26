@@ -28,6 +28,8 @@ import {
     Button,
     CardBody,
 } from "reactstrap";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 function dynamicSort(property) {
     var sortOrder = 1;
@@ -43,13 +45,34 @@ function dynamicSort(property) {
 }
 
 const List = (props) => {
-    const { fields, data, name, onClick } = props;
+    const { fields, data, name, onClick, isDownload } = props;
     const [sortBy, setSortBy] = useState(fields[0]);
     const [datas, setDatas] = useState(data);
 
     useEffect(() => {
         setDatas(data.sort(dynamicSort(sortBy || fields[0])));
     }, [sortBy, data, datas, setDatas, fields]);
+
+    async function createExcel(headers, rows) {
+        const workbook = new ExcelJS.Workbook();
+        const sheet = workbook.addWorksheet("My Worksheet");
+        sheet.columns = headers;
+        console.log(headers, rows);
+        for (let i = 0; i < rows.length; i++) {
+            sheet.addRow(rows[i]);
+        }
+        return await workbook.xlsx.writeBuffer();
+    }
+
+    const download = async () => {
+        const stream = await createExcel(
+            fields.map((dat) => {
+                return { header: dat, key: dat };
+            }),
+            datas
+        );
+        saveAs(new Blob([stream]), "lmao.xlsx");
+    };
 
     return (
         <>
@@ -69,6 +92,15 @@ const List = (props) => {
                                     <Col md="10">
                                         <h3 className="mb-0">{name}</h3>
                                     </Col>
+                                    {isDownload ? (
+                                        <Col>
+                                            <Button onClick={download}>
+                                                Download
+                                            </Button>
+                                        </Col>
+                                    ) : (
+                                        <></>
+                                    )}
                                 </Row>
                             </CardHeader>
                             <CardBody>
