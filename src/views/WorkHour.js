@@ -28,7 +28,16 @@ import { Col, Row } from "reactstrap";
 import Select from "react-select";
 
 const WorkHourScreen = (props) => {
-    const fields = ["project", "employeeId", "name", "rate", "isGST", "salary"];
+    const fields = [
+        "date",
+        "project",
+        "employeeId",
+        "name",
+        "rate",
+        "hours",
+        "isGST",
+        "salary",
+    ];
 
     const [datas, setDatas] = useState([]);
     //dates
@@ -98,18 +107,24 @@ const WorkHourScreen = (props) => {
             employeeId?.value,
             projectLocationId?.value
         );
-        setDatas(
-            data.map((dat) => {
-                return {
-                    project: dat.Project.ProjectLocation.name,
-                    employeeId: dat.employeeId,
-                    name: dat.User.firstName,
-                    rate: dat.rate,
-                    isGST: dat.isGST ? "Yes" : "No",
-                    salary: parseInt(dat.salary),
-                };
-            })
-        );
+        const newData = data.map((dat) => {
+            return {
+                project: dat.Project.ProjectLocation.name,
+                employeeId: dat.User.employeeId,
+                name: dat.User.firstName,
+                rate: dat.rate,
+                date: dat.Project.date.split("T")[0],
+                hours: dat.hours,
+                isGST: dat.User.isGST ? "Yes" : "No",
+                salary: `$${(
+                    dat.hours *
+                    dat.rate *
+                    (dat.User.isGST ? 1.1 : 1)
+                ).toFixed(1)}`,
+            };
+        });
+        console.log(data);
+        setDatas(newData);
     };
 
     const open = (idx) => {};
