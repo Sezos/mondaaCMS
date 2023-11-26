@@ -80,10 +80,7 @@ const Admin = (props) => {
                 <AdminNavbar {...props} brandText={"Mondaa Group PTY LTD"} />
                 <Routes>
                     {getRoutes(routes)}
-                    <Route
-                        path="*"
-                        element={<Navigate to="/admin/index" replace />}
-                    />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
                 <Container fluid>
                     <AdminFooter />

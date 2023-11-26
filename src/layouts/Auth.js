@@ -96,7 +96,7 @@ const Auth = (props) => {
                             {getRoutes(routes)}
                             <Route
                                 path="*"
-                                element={<Navigate to="/auth/login" replace />}
+                                element={<Navigate to="/" replace />}
                             />
                         </Routes>
                     </Row>

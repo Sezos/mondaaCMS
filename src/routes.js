@@ -28,7 +28,7 @@ import WorkHourScreen from "views/WorkHour";
 
 var routes = [
     {
-        path: "/index",
+        path: "/",
         name: "Dashboard",
         icon: "ni ni-tv-2 text-orange",
         component: <Index />,
@@ -70,7 +70,7 @@ var routes = [
         layout: "/admin",
     },
     {
-        path: "/login",
+        path: "/",
         name: "Login",
         icon: "ni ni-key-25 text-info",
         component: <Login />,

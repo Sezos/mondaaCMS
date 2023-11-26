@@ -53,20 +53,11 @@ root.render(
         <BrowserRouter>
             <Routes>
                 {check() ? (
-                    <Route path="/admin/*" element={<AdminLayout />} />
+                    <Route path="/*" element={<AdminLayout />} />
                 ) : (
-                    <Route path="/auth/*" element={<AuthLayout />} />
+                    <Route path="/*" element={<AuthLayout />} />
                 )}
-
-                <Route
-                    path="*"
-                    element={
-                        <Navigate
-                            to={check() ? "/admin/index" : "/auth/login"}
-                            replace
-                        />
-                    }
-                />
+                <Route path="*" element={<Navigate to={"/"} replace />} />
             </Routes>
         </BrowserRouter>
     </AlertProvider>
