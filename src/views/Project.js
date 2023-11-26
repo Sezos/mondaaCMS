@@ -56,23 +56,28 @@ const ProjectScreen = (props) => {
     };
 
     const open = (idx) => {};
-
-    return (
-        <>
-            <Header />
-            <Col md="2" fluid className="mt--8 ml-3">
+    const SubHeader = () => {
+        return (
+            <Col md="2" fluid className="mt-3">
                 <DatePicker
                     id="example-datepicker"
                     value={date}
                     onChange={(v, f) => handleChange(v, f)}
                 />
             </Col>
-            <div className="mt-5 w-screen">
+        );
+    };
+
+    return (
+        <>
+            <Header />
+            <div className="mt--7">
                 <List
                     data={datas}
                     fields={fields}
                     name={"Projects"}
                     onClick={open}
+                    SubHeader={SubHeader}
                 />
             </div>
         </>

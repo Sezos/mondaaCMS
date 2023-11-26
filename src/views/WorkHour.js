@@ -128,26 +128,24 @@ const WorkHourScreen = (props) => {
     };
 
     const open = (idx) => {};
-
-    return (
-        <>
-            <Header />
+    const SubHeader = () => {
+        return (
             <Row>
-                <Col md="2" fluid className="mt--8 ml-3">
+                <Col md="2" fluid className="ml-3">
                     <DatePicker
                         id="example-datepicker"
                         value={fromDate}
                         onChange={(v, f) => handleChange(v, 1)}
                     />
                 </Col>
-                <Col md="2" fluid className="mt--8 ml-3">
+                <Col md="2" fluid className="ml-3">
                     <DatePicker
                         id="example-datepicker"
                         value={toDate}
                         onChange={(v, f) => handleChange(v, 2)}
                     />
                 </Col>
-                <Col md="2" fluid className="mt--8 ml-3">
+                <Col md="2" fluid className="ml-3">
                     <Select
                         value={employeeId}
                         options={employees}
@@ -156,7 +154,7 @@ const WorkHourScreen = (props) => {
                         }}
                     />
                 </Col>
-                <Col md="2" fluid className="mt--8 ml-3">
+                <Col md="2" fluid className="ml-3">
                     <Select
                         value={projectLocationId}
                         options={projectLocations}
@@ -166,13 +164,20 @@ const WorkHourScreen = (props) => {
                     />
                 </Col>
             </Row>
-            <div className="mt-5 w-screen">
+        );
+    };
+
+    return (
+        <>
+            <Header />
+            <div className="mt--7 w-screen">
                 <List
                     data={datas}
                     fields={fields}
                     name={"Projects"}
                     onClick={open}
                     isDownload={true}
+                    SubHeader={SubHeader}
                 />
             </div>
         </>

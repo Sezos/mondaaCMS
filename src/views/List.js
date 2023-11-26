@@ -45,7 +45,7 @@ function dynamicSort(property) {
 }
 
 const List = (props) => {
-    const { fields, data, name, onClick, isDownload } = props;
+    const { fields, data, name, onClick, isDownload, SubHeader } = props;
     const [sortBy, setSortBy] = useState(fields[0]);
     const [datas, setDatas] = useState(data);
 
@@ -102,6 +102,7 @@ const List = (props) => {
                                         <></>
                                     )}
                                 </Row>
+                                {SubHeader ? <SubHeader /> : <></>}
                             </CardHeader>
                             <CardBody>
                                 <Table>
