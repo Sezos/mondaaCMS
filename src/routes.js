@@ -123,6 +123,10 @@ export const adminRoutes = [
         path: "/files",
         element: <FilesScreen />,
     },
+    {
+        path: "*",
+        element: <Navigate to="/" />,
+    },
 ];
 
 export const authRoutes = [
@@ -133,6 +137,10 @@ export const authRoutes = [
     {
         path: "/register",
         element: <Register />,
+    },
+    {
+        path: "*",
+        element: <Navigate to="/" />,
     },
 ];
 

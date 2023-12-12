@@ -5,14 +5,23 @@ class Services {
     constructor() {
         const access_token = localStorage.getItem("access_token");
         this.backend = axios.create({
-            // baseURL: "https://api.mondaa.com.au/",
-            baseURL: "http://localhost:3030/",
+            baseURL: "https://api.mondaa.com.au/",
+            // baseURL: "http://localhost:3030/",
             headers:
                 access_token !== undefined
                     ? { Authorization: `Bearer ${access_token}` }
                     : {},
         });
     }
+
+    logout = async () => {
+        try {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("user");
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     login = async ({ email, password }) => {
         try {
@@ -39,6 +48,7 @@ class Services {
             const { data } = await this.backend.get(instances.getEmployees);
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -53,6 +63,7 @@ class Services {
             );
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -63,6 +74,7 @@ class Services {
             );
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -93,6 +105,7 @@ class Services {
             );
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -152,6 +165,7 @@ class Services {
             });
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -160,6 +174,7 @@ class Services {
             const { data } = await this.backend.get(instances.files + "/" + id);
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -168,9 +183,9 @@ class Services {
             const { data } = await this.backend.get(
                 instances.files + "/file/" + id
             );
-            console.log(data);
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };
@@ -181,6 +196,7 @@ class Services {
             );
             return data;
         } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
             console.log(error);
         }
     };

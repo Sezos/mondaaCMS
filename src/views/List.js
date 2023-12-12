@@ -50,7 +50,7 @@ const List = (props) => {
     const [datas, setDatas] = useState(data);
 
     useEffect(() => {
-        setDatas(data.sort(dynamicSort(sortBy || fields[0])));
+        setDatas(data?.sort(dynamicSort(sortBy || fields[0])));
     }, [sortBy, data, datas, setDatas, fields]);
 
     async function createExcel(headers, rows) {
@@ -66,7 +66,7 @@ const List = (props) => {
 
     const download = async () => {
         const stream = await createExcel(
-            fields.map((dat) => {
+            fields?.map((dat) => {
                 return { header: dat, key: dat };
             }),
             datas
@@ -108,7 +108,7 @@ const List = (props) => {
                                 <Table>
                                     <thead className="thead-light">
                                         <tr>
-                                            {fields.map((field, idx) => {
+                                            {fields?.map((field, idx) => {
                                                 return (
                                                     <th
                                                         scope="col"
@@ -150,7 +150,7 @@ const List = (props) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {datas.map((dat, idx) => {
+                                        {datas?.map((dat, idx) => {
                                             return (
                                                 <tr
                                                     key={idx}
@@ -158,13 +158,15 @@ const List = (props) => {
                                                         onClick(dat);
                                                     }}
                                                 >
-                                                    {fields.map((field, id) => {
-                                                        return (
-                                                            <td key={id}>
-                                                                {dat[field]}
-                                                            </td>
-                                                        );
-                                                    })}
+                                                    {fields?.map(
+                                                        (field, id) => {
+                                                            return (
+                                                                <td key={id}>
+                                                                    {dat[field]}
+                                                                </td>
+                                                            );
+                                                        }
+                                                    )}
                                                 </tr>
                                             );
                                         })}

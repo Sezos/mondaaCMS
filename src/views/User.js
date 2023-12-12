@@ -35,7 +35,7 @@ const UserScreen = (props) => {
     const fetch = async () => {
         const data = await services.getUsers();
         setEmployee(
-            data.map((dat) => {
+            data?.map((dat) => {
                 return {
                     ...dat,
                     name: dat.firstName + " " + dat.lastName,
