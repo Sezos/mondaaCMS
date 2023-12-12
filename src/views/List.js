@@ -155,7 +155,7 @@ const List = (props) => {
                                                 <tr
                                                     key={idx}
                                                     onClick={() => {
-                                                        onClick(idx);
+                                                        onClick(dat);
                                                     }}
                                                 >
                                                     {fields.map((field, id) => {

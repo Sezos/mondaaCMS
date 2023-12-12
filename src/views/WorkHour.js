@@ -48,6 +48,8 @@ const WorkHourScreen = (props) => {
         new Date().toISOString().split("T")[0]
     );
 
+    const [type, setType] = useState(1);
+
     const [employees, setEmployees] = useState([]);
     const [employeeId, setEmployeeId] = useState([]);
     const [projectLocations, setProjectLocations] = useState([]);
@@ -69,7 +71,7 @@ const WorkHourScreen = (props) => {
 
     useEffect(() => {
         fetch();
-    }, [fromDate, toDate, employeeId, projectLocationId]);
+    }, [fromDate, toDate, employeeId, projectLocationId, type]);
 
     useEffect(() => {
         initFetch();
@@ -101,30 +103,49 @@ const WorkHourScreen = (props) => {
     };
 
     const fetch = async () => {
-        const data = await services.getWorkHours(
-            fromDate,
-            toDate,
-            employeeId?.value,
-            projectLocationId?.value
-        );
-        const newData = data.map((dat) => {
-            return {
-                project: dat.Project.ProjectLocation.name,
-                employeeId: dat.User.employeeId,
-                name: dat.User.firstName,
-                rate: dat.rate,
-                date: dat.Project.date.split("T")[0],
-                hours: dat.hours,
-                isGST: dat.User.isGST ? "Yes" : "No",
-                salary: `$${(
-                    dat.hours *
-                    dat.rate *
-                    (dat.User.isGST ? 1.1 : 1)
-                ).toFixed(1)}`,
-            };
-        });
-        console.log(data);
-        setDatas(newData);
+        if (type === 1) {
+            const data = await services.getWorkHours(
+                fromDate,
+                toDate,
+                employeeId?.value,
+                projectLocationId?.value
+            );
+            const newData = data.map((dat) => {
+                return {
+                    project: dat.Project.ProjectLocation.name,
+                    employeeId: dat.User.employeeId,
+                    name: dat.User.firstName,
+                    rate: dat.rate,
+                    date: dat.Project.date.split("T")[0],
+                    hours: dat.hours,
+                    isGST: dat.User.isGST ? "Yes" : "No",
+                    salary: `$${(
+                        dat.hours *
+                        dat.rate *
+                        (dat.User.isGST ? 1.1 : 1)
+                    ).toFixed(1)}`,
+                };
+            });
+            setDatas(newData);
+        } else {
+            const data = await services.getWorkHoursTotal(
+                fromDate,
+                toDate,
+                employeeId?.value,
+                projectLocationId?.value
+            );
+            const newData = data.map((dat) => {
+                return {
+                    employeeId: dat.User.employeeId,
+                    name: dat.User.firstName,
+                    rate: dat.rate,
+                    hours: dat.hours,
+                    isGST: dat.User.isGST ? "Yes" : "No",
+                    salary: `$${dat.salary}`,
+                };
+            });
+            setDatas(newData);
+        }
     };
 
     const open = (idx) => {};
@@ -160,6 +181,18 @@ const WorkHourScreen = (props) => {
                         options={projectLocations}
                         onChange={(value) => {
                             setProjectLocationId(value);
+                        }}
+                    />
+                </Col>
+                <Col md="2" fluid className="ml-3">
+                    <Select
+                        value={type}
+                        options={[
+                            { value: 1, label: "Each" },
+                            { value: 2, label: "Total" },
+                        ]}
+                        onChange={({ value }) => {
+                            setType(value);
                         }}
                     />
                 </Col>

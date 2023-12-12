@@ -5,8 +5,8 @@ class Services {
     constructor() {
         const access_token = localStorage.getItem("access_token");
         this.backend = axios.create({
-            baseURL: "https://api.mondaa.com.au/",
-            // baseURL: "http://localhost:3030/",
+            // baseURL: "https://api.mondaa.com.au/",
+            baseURL: "http://localhost:3030/",
             headers:
                 access_token !== undefined
                     ? { Authorization: `Bearer ${access_token}` }
@@ -66,6 +66,37 @@ class Services {
             console.log(error);
         }
     };
+
+    getWorkHoursTotal = async (from, to, employeeId, projectLocationId) => {
+        try {
+            console.log(from, to, employeeId, projectLocationId);
+            let query = "?";
+            if (from) {
+                query += query === "?" ? "" : "&";
+                query += `from=${from}`;
+            }
+            if (to) {
+                query += query === "?" ? "" : "&";
+                query += `to=${to}`;
+            }
+            if (employeeId) {
+                query += query === "?" ? "" : "&";
+                query += `employeeId=${employeeId}`;
+            }
+            if (projectLocationId) {
+                query += query === "?" ? "" : "&";
+                query += `projectLocationId=${projectLocationId}`;
+            }
+
+            const { data } = await this.backend.get(
+                instances.getWorkHoursTotal + query
+            );
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     getWorkHours = async (fromDate, toDate, employeeId, projectLocationId) => {
         try {
             const { data } = await this.backend.post(instances.getWorkHours, {
@@ -119,6 +150,35 @@ class Services {
                     },
                 },
             });
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    getFiles = async (id) => {
+        try {
+            const { data } = await this.backend.get(instances.files + "/" + id);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    getFile = async (id) => {
+        try {
+            const { data } = await this.backend.get(
+                instances.files + "/file/" + id
+            );
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    checkFile = async (id) => {
+        try {
+            const { data } = await this.backend.patch(
+                instances.files + "/" + id
+            );
             return data;
         } catch (error) {
             console.log(error);
