@@ -55,8 +55,8 @@ const WorkHourScreen = (props) => {
     const [projectLocations, setProjectLocations] = useState([]);
     const [projectLocationId, setProjectLocationId] = useState([]);
 
-    function handleChange(value, type) {
-        if (type === 1) {
+    function handleChange(value, _type) {
+        if (_type === 1) {
             setFromDate(value.split("T")[0]);
             if (new Date(value) > new Date(toDate)) {
                 setToDate(value.split("T")[0]);
@@ -103,7 +103,7 @@ const WorkHourScreen = (props) => {
     };
 
     const fetch = async () => {
-        if (type === 1) {
+        if (type.value === 1) {
             const data = await services.getWorkHours(
                 fromDate,
                 toDate,
@@ -139,7 +139,7 @@ const WorkHourScreen = (props) => {
                     employeeId: dat.User.employeeId,
                     name: dat.User.firstName,
                     rate: dat.rate,
-                    hours: dat.hours,
+                    hours: dat.workHours,
                     isGST: dat.User.isGST ? "Yes" : "No",
                     salary: `$${dat.salary}`,
                 };
@@ -191,7 +191,7 @@ const WorkHourScreen = (props) => {
                             { value: 1, label: "Each" },
                             { value: 2, label: "Total" },
                         ]}
-                        onChange={({ value }) => {
+                        onChange={(value) => {
                             setType(value);
                         }}
                     />
