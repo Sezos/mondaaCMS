@@ -48,7 +48,7 @@ const WorkHourScreen = (props) => {
         new Date().toISOString().split("T")[0]
     );
 
-    const [type, setType] = useState(1);
+    const [type, setType] = useState({ value: 1, label: "Each" });
 
     const [employees, setEmployees] = useState([]);
     const [employeeId, setEmployeeId] = useState([]);
