@@ -44,7 +44,10 @@ const UserScreen = (props) => {
         );
     };
 
-    const open = (idx) => {};
+    const open = (data) => {
+        window.location.href = "/user/" + data.id;
+    };
+
     return (
         <>
             <Header />

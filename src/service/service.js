@@ -5,8 +5,8 @@ class Services {
     constructor() {
         const access_token = localStorage.getItem("access_token");
         this.backend = axios.create({
-            baseURL: "https://api.mondaa.com.au/",
-            // baseURL: "http://localhost:3030/",
+            // baseURL: "https://api.mondaa.com.au/",
+            baseURL: "http://localhost:3030/",
             headers:
                 access_token !== undefined
                     ? { Authorization: `Bearer ${access_token}` }
@@ -46,6 +46,31 @@ class Services {
     getUsers = async () => {
         try {
             const { data } = await this.backend.get(instances.getEmployees);
+            return data;
+        } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
+            console.log(error);
+        }
+    };
+
+    getUserInfo = async (id) => {
+        try {
+            const { data } = await this.backend.get(
+                instances.getUserInfo + "/" + id
+            );
+            return data;
+        } catch (error) {
+            if (error?.response?.data?.statusCode === 401) this.logout();
+            console.log(error);
+        }
+    };
+
+    updateUser = async (id, body) => {
+        try {
+            const { data } = await this.backend.patch(
+                instances.updateEmployeeInfo + "/" + id,
+                body
+            );
             return data;
         } catch (error) {
             if (error?.response?.data?.statusCode === 401) this.logout();

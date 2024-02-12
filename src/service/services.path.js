@@ -11,7 +11,7 @@ export const instances = {
     getProjectWorker: "PROJECT/",
     getUserInfo: "USER/INFO",
     setUserInfo: "USER",
-    updateEmployeeInfo: "USER/",
+    updateEmployeeInfo: "USER",
     register: "USER",
     setAvatar: "USER/SETAVATAR",
     uploadImage: "USER/UPLOADFILE",

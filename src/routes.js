@@ -27,6 +27,7 @@ import ProjectLocationScreen from "views/ProjectLocation";
 import WorkHourScreen from "views/WorkHour";
 import FilesScreen from "views/Files";
 import FileScreen from "views/File";
+import UserInfo from "views/UserInfo";
 
 var routes = [
     {
@@ -122,6 +123,10 @@ export const adminRoutes = [
     {
         path: "/files",
         element: <FilesScreen />,
+    },
+    {
+        path: "/user/:id",
+        element: <UserInfo />,
     },
     {
         path: "*",
