@@ -22,45 +22,51 @@ import { useEffect, useState } from "react";
 import Header from "components/Headers/Header.js";
 import services from "../service/service";
 import List from "./List";
+import UserInfo from "./UserInfo";
 
 const UserScreen = (props) => {
-    const fields = ["employeeId", "name", "email", "phone", "role"];
+  const fields = ["employeeId", "name", "email", "phone", "role"];
 
-    const [employees, setEmployee] = useState([]);
+  const [employees, setEmployee] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
 
-    useEffect(() => {
-        fetch();
-    }, []);
+  useEffect(() => {
+    fetch();
+  }, []);
 
-    const fetch = async () => {
-        const data = await services.getUsers();
-        setEmployee(
-            data?.map((dat) => {
-                return {
-                    ...dat,
-                    name: dat.firstName + " " + dat.lastName,
-                };
-            })
-        );
-    };
-
-    const open = (data) => {
-        window.location.href = "/user/" + data.id;
-    };
-
-    return (
-        <>
-            <Header />
-            <div className="mt--7">
-                <List
-                    data={employees}
-                    fields={fields}
-                    name={"Users"}
-                    onClick={open}
-                />
-            </div>
-        </>
+  const fetch = async () => {
+    const data = await services.getUsers();
+    setEmployee(
+      data?.map((dat) => {
+        return {
+          ...dat,
+          name: dat.firstName + " " + dat.lastName,
+        };
+      }),
     );
+  };
+
+  const open = (data) => {
+    setSelectedId(data.id);
+  };
+
+  return (
+    <>
+      <Header />
+      {selectedId === null ? (
+        <div className="mt--7">
+          <List
+            data={employees}
+            fields={fields}
+            name={"Users"}
+            onClick={open}
+          />
+        </div>
+      ) : (
+        <UserInfo selectedId={selectedId} setSelectedId={setSelectedId} />
+      )}
+    </>
+  );
 };
 
 export default UserScreen;

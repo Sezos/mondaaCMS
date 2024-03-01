@@ -1,182 +1,190 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import Header from "components/Headers/Header.js";
+import { useEffect, useState } from "react";
+import { Button } from "reactstrap";
 import services from "./../service/service";
-import { Container, Card, CardHeader, CardBody } from "reactstrap";
-
 import Info from "./Info";
 
 const UserInfo = (props) => {
-    const { id } = useParams();
-    const [data, setData] = useState({});
+  const { selectedId, setSelectedId } = props;
+  const [data, setData] = useState({});
+  const fields = [
+    {
+      name: "Employee ID",
+      value: "employeeId",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "First Name",
+      value: "firstName",
+      type: "text",
+      isEditable: false,
+    },
+    {
+      name: "Last Name",
+      value: "lastName",
+      type: "text",
+      isEditable: false,
+    },
+    {
+      name: "Nick Name",
+      value: "nickName",
+      type: "text",
+      isEditable: true,
+    },
+    { name: "Avatar", value: "avatar", type: "image", isEditable: true },
+    { name: "PhotoID", value: "PhotoID", type: "image", isEditable: true },
+    {
+      name: "Photo ID Back Side",
+      value: "PhotoIDBack",
+      type: "image",
+      isEditable: true,
+    },
+    {
+      name: "Other Cards",
+      value: "OtherCard",
+      type: "image",
+      isEditable: true,
+    },
 
-    const fields = [
-        {
-            name: "First Name",
-            value: "firstName",
-            type: "text",
-            isEditable: false,
-        },
-        {
-            name: "Last Name",
-            value: "lastName",
-            type: "text",
-            isEditable: false,
-        },
-        {
-            name: "Nick Name",
-            value: "nickName",
-            type: "text",
-            isEditable: true,
-        },
-        { name: "Avatar", value: "avatar", type: "image", isEditable: true },
-        { name: "PhotoID", value: "PhotoID", type: "image", isEditable: true },
-        {
-            name: "Photo ID Back Side",
-            value: "PhotoIDBack",
-            type: "image",
-            isEditable: true,
-        },
-        {
-            name: "Other Cards",
-            value: "OtherCard",
-            type: "image",
-            isEditable: true,
-        },
+    {
+      name: "White Card",
+      value: "workWhiteCard",
+      type: "image",
+      isEditable: true,
+    },
+    {
+      name: "White Card Back Side",
+      value: "workWhiteCardBack",
+      type: "image",
+      isEditable: true,
+    },
+    { name: "Email", value: "email", type: "text", isEditable: true },
+    { name: "Phone", value: "phone", type: "text", isEditable: true },
+    { name: "Address", value: "address", type: "text", isEditable: true },
+    {
+      name: "Emergency Name",
+      value: "emergencyName",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "Emergency Phone",
+      value: "emergencyPhone",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "Emergency Email",
+      value: "emergencyEmail",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "BSB",
+      value: "accountBSB",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "Account Number",
+      value: "accountNumber",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "Account Name",
+      value: "accountName",
+      type: "text",
+      isEditable: true,
+    },
+    { name: "ABN", value: "workABN", type: "text", isEditable: true },
+    { name: "TFN", value: "workTFN", type: "text", isEditable: true },
+    {
+      name: "Visa Type",
+      value: "workVisaType",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "Role",
+      value: "role",
+      type: "picker",
+      options: [
+        { label: "Leader", value: "Leader" },
+        { label: "Employee", value: "Employee" },
+      ],
+      isEditable: true,
+    },
+    {
+      name: "Status",
+      value: "status",
+      type: "picker",
+      options: [
+        { label: "Pending", value: "Pending" },
+        { label: "Verified", value: "Verified" },
+        { label: "Suspended", value: "Suspended" },
+      ],
+      isEditable: true,
+    },
+    {
+      name: "is Reviewed",
+      value: "isReviewed",
+      type: "picker",
+      options: [
+        { label: "Yes", value: 1 },
+        { label: "No", value: 0 },
+      ],
+      isEditable: true,
+    },
+    {
+      name: "Experience",
+      value: "experience",
+      type: "text",
+      isEditable: true,
+    },
+    {
+      name: "is GST",
+      value: "isGST",
+      type: "picker",
+      options: [
+        { label: "Yes", value: true },
+        { label: "No", value: false },
+      ],
+      isEditable: true,
+    },
+    { name: "Rate", value: "rate", type: "text", isEditable: true },
+  ];
 
-        {
-            name: "White Card",
-            value: "workWhiteCard",
-            type: "image",
-            isEditable: true,
-        },
-        {
-            name: "White Card Back Side",
-            value: "workWhiteCardBack",
-            type: "image",
-            isEditable: true,
-        },
-        { name: "Email", value: "email", type: "text", isEditable: true },
-        { name: "Phone", value: "phone", type: "text", isEditable: true },
-        { name: "Address", value: "address", type: "text", isEditable: true },
-        {
-            name: "Emergency Name",
-            value: "emergencyName",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Emergency Phone",
-            value: "emergencyPhone",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Emergency Email",
-            value: "emergencyEmail",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "BSB",
-            value: "accountBSB",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Account Number",
-            value: "accountNumber",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Account Name",
-            value: "accountName",
-            type: "text",
-            isEditable: true,
-        },
-        { name: "ABN", value: "workABN", type: "text", isEditable: true },
-        { name: "TFN", value: "workTFN", type: "text", isEditable: true },
-        {
-            name: "Visa Type",
-            value: "workVisaType",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Role",
-            value: "role",
-            type: "picker",
-            options: [
-                { label: "Leader", value: "Leader" },
-                { label: "Employee", value: "Employee" },
-            ],
-            isEditable: true,
-        },
-        {
-            name: "Status",
-            value: "status",
-            type: "picker",
-            options: [
-                { label: "Pending", value: "Pending" },
-                { label: "Verified", value: "Verified" },
-                { label: "Suspended", value: "Suspended" },
-            ],
-            isEditable: true,
-        },
-        {
-            name: "is Reviewed",
-            value: "isReviewed",
-            type: "picker",
-            options: [
-                { label: "Yes", value: 1 },
-                { label: "No", value: 0 },
-            ],
-            isEditable: true,
-        },
-        {
-            name: "Experience",
-            value: "experience",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "Employee ID",
-            value: "employeeId",
-            type: "text",
-            isEditable: true,
-        },
-        {
-            name: "is GST",
-            value: "isGST",
-            type: "picker",
-            options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
-            ],
-            isEditable: true,
-        },
-        { name: "Rate", value: "rate", type: "text", isEditable: true },
-    ];
+  useEffect(() => {
+    fetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId]);
 
-    useEffect(() => {
-        fetch();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  const fetch = async () => {
+    const _ = await services.getUserInfo(selectedId);
+    setData(_);
+  };
 
-    const fetch = async () => {
-        const _ = await services.getUserInfo(id);
-        setData(_);
-    };
-
+  const SubHeader = () => {
     return (
-        <>
-            <Header />
-            <div className="mt--5 w-screen">
-                <Info data={data} fields={fields} />
-            </div>
-        </>
+      <Button
+        onClick={() => {
+          setSelectedId(null);
+        }}
+      >
+        <i className="ni ni-bold-left"></i>
+      </Button>
     );
+  };
+
+  return (
+    <>
+      <div className="mt--7 w-screen">
+        <Info data={data} fields={fields} SubHeader={SubHeader} />
+      </div>
+    </>
+  );
 };
 
 export default UserInfo;

@@ -17,17 +17,16 @@
 */
 import { Navigate } from "react-router-dom";
 
-import Index from "views/Index.js";
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
-import Icons from "views/examples/Icons.js";
-import UserScreen from "views/User";
-import ProjectScreen from "views/Project";
-import ProjectLocationScreen from "views/ProjectLocation";
-import WorkHourScreen from "views/WorkHour";
-import FilesScreen from "views/Files";
-import FileScreen from "views/File";
-import UserInfo from "views/UserInfo";
+import Index from "./views/Index.js";
+import Register from "./views/examples/Register.js";
+import Login from "./views/examples/Login.js";
+import Icons from "./views/examples/Icons.js";
+import UserScreen from "./views/User";
+import ProjectScreen from "./views/Project";
+import ProjectLocationScreen from "./views/ProjectLocation";
+import WorkHourScreen from "./views/WorkHour";
+import FilesScreen from "./views/Files";
+import UserInfo from "./views/UserInfo";
 
 var routes = [
     {
